@@ -1,27 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.css">
+
+
     <style>
-        footer {
-            font-size: small;
-        }
+
+    * {
+      margin: 0;
+      padding: 0;
+      text-decoration: none;
+      color: black;
+      box-sizing: border-box;
+      font-size: 62.5%; /* 1 rem = 10 px */
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+      flex-flow: column;
+    }
+
+    header {
+      width: 90vw;
+      margin-top: 2.5rem;
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: flex-start;
+    }
+
+    main {
+      display: flex;
+      align-items: center;
+      align-content: center;
+      justify-content: center;
+    }
+
+    article {
+      width: 90vw;
+    }
+
+    footer {
+      width: 100vw;
+      padding: 2.5rem 0;
+      bottom: 0;
+      position: absolute;
+      background: #f1f1f1;
+      font-size: 1vw;
+      text-align: center;
+    }
+
+    footer i {
+      font-size: inherit;
+    }
+
+    /*
+    button {
+      margin-bottom: 2rem;
+      padding: 0.5rem 1rem;
+      background: #ddd;
+      font-size: 1vw;
+    }
+    */
+
+    p {
+      font-size: 1.2vw;
+    }
+
     </style>
+
+
     <title>Gjett et tall</title>
+
 </head>
+
+
+
+
 <body>
+
+
     <header><h1>Gjett et tall</h1></header>
+
     <main>
+
+      <!--
         <article>
             <label for="inpGjetting">Gjett et tall</label>
             <input id="inpGjetting" type="number"  min="0" max="10" onchange="gjett()">
             <p id="txtBeskjed"></p>
         </article>
+      -->
+
+      <article>
+        <form id="guessForm">
+          <label for="inpGuess">Ditt tall</label>
+          <input id="inpGuess" type="number" min="0" max="10">
+          <button class="button" type="submit" name="button" onclick="guess()">Gjett</button>
+        </form>
+        <p id="txtMessage"></p>
+        <p id="txtYN"></p>
+        <p id="resetGame"></p>
+      </article>
+
     </main>
+
+
 <footer>
-    Gjett et tall er lagd av <i>Incognito</i>
+    "Gjett et tall" er lagd av <i>Mia</i>
 </footer>
+
+
+
+<!--
     <script>
 
         // Få tak på HTML-objekter
@@ -38,7 +135,66 @@
 
             /* Fortsett her for å finne ut om tallet er korrekt! */
         }
-
     </script>
+-->
+
+
+
+
+<script>
+
+
+  // Get HTML elements
+  var guessForm = document.querySelector('#guessForm');
+  var inpGuess = document.querySelector('#inpGuess');
+  var txtYN = document.querySelector('#txtYN');
+  var txtMessage = document.querySelector('#txtMessage');
+  var resetGame = document.querySelector('#resetGame');
+
+  var rightNum = 8;
+  var guesses = 0;
+
+
+  // Listener function runs when you guess a number
+  function guess(event){
+
+    // prevent page reload
+    event.preventDefault();
+
+    // turn the input to a number
+    let guessedNum = Number(inpGuess.value);
+
+    // check in console
+    console.log('testing guess');
+
+    // guess is correct
+    if (guessedNum == rightNum) {
+      txtYN.innerHTML += `RIKTIG <br />`;
+    };
+
+    // guess is too low
+    if (guessedNum < rightNum) {
+      txtMessage.innerHTML += `Tallet ${guessedNum} er for lavt <br />`;
+      inpGuess.innerHTML = '';
+    };
+
+    // guess is too high
+    if (guessedNum > rightNum) {
+      txtMessage.innerHTML += `Tallet ${guessedNum} er for høyt <br />`;
+      inpGuess.innerHTML = '';
+    };
+
+  };
+
+
+  // register function
+  guessForm.onsubmit = guess;
+
+
+</script>
+
+
+
+
 </body>
 </html>
