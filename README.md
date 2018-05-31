@@ -13,7 +13,7 @@ Etter begrepet står siden det er forklart på i [JavaScript kompendiet](https:/
 ## Spesifikasjon
 * Lag en applikasjon hvor en bruker skal gjette et tall hen ikke vet hva er.
 * Brukeren skal få vite om tallet hen har gjettet er korrekt eller feil. Bruk en [if test](https://www.w3schools.com/js/js_if_else.asp) sammen med [sammenliknings-operatorer](https://www.w3schools.com/js/js_comparisons.asp)
-* Tallet brukeren skal gjetter skal lages [tilfeldig](https://www.w3schools.com/jsref/jsref_random.asp)
+* Tallet brukeren skal gjetter skal lages [tilfeldig](https://www.w3schools.com/jsref/jsref_random.asp) *!to do!*
 
 ## Utvidelser
 1. Brukeren skal få vite om tallet hen gjettet var for litet eller for stort,
@@ -21,5 +21,3 @@ Etter begrepet står siden det er forklart på i [JavaScript kompendiet](https:/
 3. Brukeren skal kunne vite hvor mange gjettninger hen har brukt til å finne frem til korrekt svar.
 4. Kan du lage en knapp som restarter gjette-konkuransen?
 5. Hvordan kan du integrere Firebase i denne oppgaven?
-
-
