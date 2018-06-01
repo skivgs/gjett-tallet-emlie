@@ -28,4 +28,4 @@ Etter begrepet står siden det er forklart på i [JavaScript kompendiet](https:/
 - [] Brukeren skal få vite mellom hvilke tall det ukjente tallet ligger, og kan du oppdatere disse to tallene basert på brukerens tidligere gjetninger? (se punkt 1.)
 - [] Brukeren skal kunne vite hvor mange gjettninger hen har brukt til å finne frem til korrekt svar.
 - [] Kan du lage en knapp som restarter gjette-konkuransen?
-- [] Hvordan kan du integrere Firebase i denne oppgaven?
+- [] ~~Hvordan kan du integrere Firebase i denne oppgaven?~~
