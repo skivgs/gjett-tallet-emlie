@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
 
-    <meta charset="UTF-8">
+  <title>Gjett et tall</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.css">
+  <meta charset="UTF-8">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.css">
 
 
-    <style>
+  <style>
 
     * {
       margin: 0;
@@ -60,23 +62,11 @@
       font-size: inherit;
     }
 
-    /*
-    button {
-      margin-bottom: 2rem;
-      padding: 0.5rem 1rem;
-      background: #ddd;
-      font-size: 1vw;
-    }
-    */
-
     p {
       font-size: 1.2vw;
     }
 
-    </style>
-
-
-    <title>Gjett et tall</title>
+</style>
 
 </head>
 
@@ -90,23 +80,17 @@
 
     <main>
 
-      <!--
-        <article>
-            <label for="inpGjetting">Gjett et tall</label>
-            <input id="inpGjetting" type="number"  min="0" max="10" onchange="gjett()">
-            <p id="txtBeskjed"></p>
-        </article>
-      -->
-
       <article>
         <form id="guessForm">
           <label for="inpGuess">Ditt tall</label>
           <input id="inpGuess" type="number" min="0" max="10">
-          <button class="button" type="submit" name="button" onclick="guess()">Gjett</button>
+          <button class="button submitGuess" type="submit" name="button" onclick="guess()">Gjett</button>
         </form>
-        <p id="txtMessage"></p>
-        <p id="txtYN"></p>
-        <p id="resetGame"></p>
+        <div class="resultP">
+          <p class="guesses"></p>
+          <p class="lastResult"></p>
+          <p class="lowOrHigh"></p>
+        </div>
       </article>
 
     </main>
@@ -118,28 +102,6 @@
 
 
 
-<!--
-    <script>
-
-        // Få tak på HTML-objekter
-        var inpGjetting = document.getElementById("inpGjetting");
-        var txtBeskjed = document.getElementById("txtBeskjed");
-
-        var korrektTall = 3;
-
-        // Lytter funksjon som kalles når noen har gjort en gjetning.
-        function gjett(){
-
-            // Henter ut tallet brukeren har gjettet og gjør om det til et tall
-            var gjettetTall = Number(inpGjetting.value);
-
-            /* Fortsett her for å finne ut om tallet er korrekt! */
-        }
-    </script>
--->
-
-
-
 
 <script>
 
@@ -147,44 +109,139 @@
   // Get HTML elements
   var guessForm = document.querySelector('#guessForm');
   var inpGuess = document.querySelector('#inpGuess');
-  var txtYN = document.querySelector('#txtYN');
-  var txtMessage = document.querySelector('#txtMessage');
-  var resetGame = document.querySelector('#resetGame');
+  var submitGuess = document.querySelector('.submitGuess');
 
-  var rightNum = 8;
-  var guesses = 0;
+  var guesses = document.querySelector('.guesses');
+  var lastResult = document.querySelector('.lastResult');
+  var lowOrHigh = document.querySelector('.lowOrHigh');
+
+  var guessCount = 1;
+  var resetButton;
+
+  /*
+  Math.floor(x) eturns the largest integer less than or equal to a number
+  Mathrandom(x) returns a random number
+  Together they return a random number (integer) between 1 and 10
+  */
+  var rightRandomNum = Math.floor(Math.random()*10) + 1;
 
 
-  // Listener function runs when you guess a number
+
+
+  // Function runs when you guess a number
   function guess(event){
 
-    // prevent page reload
-    event.preventDefault();
-
-    // turn the input to a number
-    let guessedNum = Number(inpGuess.value);
-
-    // check in console
+    // Check in console
     console.log('testing guess');
 
-    // guess is correct
-    if (guessedNum == rightNum) {
-      txtYN.innerHTML += `RIKTIG <br />`;
-    };
+    // Prevent page reload
+    event.preventDefault();
 
-    // guess is too low
-    if (guessedNum < rightNum) {
-      txtMessage.innerHTML += `Tallet ${guessedNum} er for lavt <br />`;
-      inpGuess.innerHTML = '';
-    };
+    // Turn the input to a number
+    let guessedNum = Number(inpGuess.value);
 
-    // guess is too high
-    if (guessedNum > rightNum) {
-      txtMessage.innerHTML += `Tallet ${guessedNum} er for høyt <br />`;
-      inpGuess.innerHTML = '';
-    };
+
+    /*
+    Use textContent when dealing with text
+    Use innerHTML when dealing with HTML
+    */
+
+    // Guess count is 1
+    if (guessCount == 1) {
+      guesses.textContent = 'Tidligere gjettinger: ';
+    }
+
+    // Show which numbers have been guessed with space between them
+    guesses.textContent += guessedNum + ' ';
+
+
+    if (guessedNum == rightRandomNum) { // Guess is correct
+      lastResult.textContent = `RIKTIG!`;
+      lastResult.style.color = '#93D179';
+      lastResult.style.fontWeight = 'bold';
+      lowOrHigh.textContent = '';
+      setGameOver(); //Run function
+    } else if (guessCount == 10) { // You have guessed unsuccessfully 10 times
+      lastResult.textContent = 'GAME OVER';
+      setGameOver();
+    } else { // Guess is wrong
+      lastResult.textContent = 'FEIL!';
+      lastResult.style.color = '#F08367';
+    } if (guessedNum < rightRandomNum) { // Guess lower
+      lowOrHigh.textContent = 'For lavt';
+    } else if (guessedNum > rightRandomNum) { // Guess is greater
+      lowOrHigh.textContent = 'For høyt';
+    }
+
+    // guessCount increases with 1 for each count
+    guessCount++;
+
+    // Reset input field after each guess
+    inpGuess.value = '';
+
+    // Focus on inout field
+    inpGuess.focus();
 
   };
+
+
+
+  // Function runs when game is over
+  function setGameOver(){
+
+    console.log('testing setGameOver');
+
+    // Can't guess or submit after game over
+    inpGuess.disabled = true
+    submitGuess.disabled = true
+
+    // Create reset button
+    resetButton = document.createElement('button');
+    resetButton.classList.add('button');
+    resetButton.textContent = 'Start på nytt';
+    document.body.appendChild(resetButton); // Add button to body element
+
+    // Make function run when button is clicked
+    resetButton.addEventListener('click', resetGame);
+
+  };
+
+
+
+
+  // Function runs when resetButton is clicked
+  function resetGame(){
+
+    console.log('testing resetGame');
+
+    guessCount = 1;
+
+    // Select all paragraphs
+    let resetP = document.querySelectorAll('.resultP p');
+
+    // For each paragraph, remove the text content
+    for (let i = 0 ; i < resetP.length ; i++) {
+      resetP[i].textContent = '';
+    }
+
+    // Delete resetButton
+    resetButton.parentNode.removeChild(resetButton);
+
+    // Enable guessing and submitting
+    inpGuess.disabled = false;
+    submitGuess.disabled = false;
+
+    inpGuess.value = '';
+    inpGuess.focus();
+
+    lastResult.style.color = 'black';
+
+    // The right number is a new random number
+    rightRandomNum = Math.floor(Math.random()*10) + 1;
+
+  };
+
+
 
 
   // register function
