@@ -1,6 +1,8 @@
 # Gjett et tall!
 Vi skal lage en web-applikasjon hvor brukeren skal gjette ett tall. Brukeren skal gjette til hen har gjettet korrekt.
 
+[GITHUB PAGES](https://skivgs.github.io/gjett-tallet-emlie/)
+
 ## Kom igang
 * Last ned boilerplate-koden i github-desktop gjennom å kopiere linken under *clone or download* oppe til høyre.
 
